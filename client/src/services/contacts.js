@@ -1,8 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:8080/api/contact';
-
-
+const API_URL = "http://localhost:8080/api/contact";
 
 export const getContacts = async () => {
   const response = await axios.get(`${API_URL}/all`);
@@ -22,4 +20,3 @@ export const updateContact = async (id, updatedContact) => {
 export const deleteContact = async (id) => {
   await axios.delete(`${API_URL}/delete/${id}`);
 };
-
