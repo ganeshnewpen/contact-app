@@ -1,18 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 function ContactForm({ initialContact = {}, onSave }) {
   const [contact, setContact] = useState({
-    name: initialContact.name || '',
-    email: initialContact.email || '',
-    phone: initialContact.phone || '',
-    address: initialContact.address || '',
-    post: initialContact.post || '',
-    profileImage: initialContact.profileImage || '',
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    post: "",
+    profileImage: ""
   });
+
+  useEffect(() => {
+    setContact({
+      name: initialContact.name || "",
+      email: initialContact.email || "",
+      phone: initialContact.phone || "",
+      address: initialContact.address || "",
+      post: initialContact.post || "",
+      profileImage: initialContact.profileImage || "",
+    });
+  }, [initialContact]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContact(prev => ({ ...prev, [name]: value }));
+    setContact((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -67,7 +78,7 @@ function ContactForm({ initialContact = {}, onSave }) {
         placeholder="Profile Image URL"
       />
       <button type="submit">
-        {initialContact.id ? 'Update' : 'Add'} Contact
+        {initialContact.id ? "Update" : "Add"} Contact
       </button>
     </form>
   );
