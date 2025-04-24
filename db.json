@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@gmail.com",
+      "password": "1234",
+      "isAdmin": true
+    }
+  ],
+  "contacts": [
+    {
+      "id": "916b",
+      "name": "Aladdin Dickson",
+      "email": "huhoh@mailinator.com",
+      "phone": "+1 (385) 791-7798",
+      "address": "Sed doloribus ab rer",
+      "post": "Exercitation quis no",
+      "profileImage": "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"
+    }
+  ]
+}
