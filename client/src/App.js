@@ -3,6 +3,8 @@ import { getCurrentUser } from './services/auth';
 import LoginPage from './pages/LoginPage';
 import ContactsPage from './pages/ContactsPage';
 import './Style.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   return (

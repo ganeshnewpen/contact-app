@@ -36,5 +36,4 @@ function ContactList({ contacts, onView, onEdit, onDelete }) {
     </table>
   );
 }
-
 export default ContactList;
