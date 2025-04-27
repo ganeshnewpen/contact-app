@@ -16,7 +16,8 @@ function App() {
           path="/contacts" 
           element={
             getCurrentUser() ? (
-              <Dashboard />
+              <ContactsPage />
+              // <Dashboard/>
             ) : (
               <Navigate to="/login" />
             )

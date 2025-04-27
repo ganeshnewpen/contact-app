@@ -1,22 +1,72 @@
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { getStringAvatar } from "../utils/helpers";
+
 function ContactCard({ contact, onView, onEdit, onDelete }) {
+  const [imageError, setImageError] = useState(false);
+  useEffect(() => {
+    setImageError(false);
+  }, [contact.profileImage]);
+
   return (
     <tr className="contact-row">
-      <td className="contact-image-cell">
-        <img
-          src={contact.profileImage || "https://via.placeholder.com/50"}
-          alt={contact.name}
-          className="contact-avatar"
-        />
+      <td onClick={() => onView(contact)}>
+        <div className="d-flex align-items-center gap-2 cursor-pointer">
+          {contact.profileImage && !imageError ? (
+            <img
+              src={contact.profileImage}
+              alt={contact.name}
+              className="rounded-circle"
+              width="36"
+              height="36"
+              onError={() => setImageError(true)}
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <div
+              className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center fw-semibold"
+              style={{ width: "36px", height: "36px", fontSize: "16px" }}
+            >
+              {getStringAvatar(contact.name)}
+            </div>
+          )}
+          <span class="fw-semibold text-nowrap">{contact.name}</span>
+        </div>
       </td>
-      <td>{contact.name}</td>
-      <td>{contact.email}</td>
-      <td>{contact.phone || "-"}</td>
+      <td>
+        <a
+          href={`mailto:${contact.email}`}
+          className="text-decoration-none text-reset"
+        >
+          {contact.email || "-"}
+        </a>
+      </td>
+      <td>
+        <a
+          href={`tel:${contact.phone}`}
+          className="text-decoration-none text-reset"
+        >
+          {contact.phone || "-"}
+        </a>
+      </td>
       <td>{contact.post || "-"}</td>
       <td>{contact.address || "-"}</td>
-      <td className="contact-actions-cell">
-        <button onClick={() => onView(contact)}>View</button>
-        <button onClick={() => onEdit(contact)}>Edit</button>
-        <button onClick={() => onDelete(contact.id)}>Delete</button>
+
+      <td>
+        <div className="contact-actions-cell contact-action-buttons">
+          <button onClick={() => onView(contact)}>
+            {" "}
+            <FontAwesomeIcon icon={faEye} />
+          </button>
+          <button onClick={() => onEdit(contact)} className="text-primary">
+            {" "}
+            <FontAwesomeIcon icon={faPen} />{" "}
+          </button>
+          <button onClick={() => onDelete(contact.id)} className="text-danger">
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
       </td>
     </tr>
   );

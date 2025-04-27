@@ -1,12 +1,27 @@
 import asyncHandler from "express-async-handler";
 import Contact from "../models/contact.js";
 
+// Create a new contact
 const createContact = asyncHandler(async (req, res) => {
-  const { name, email, phone, address, post, profileImage } = req.body;
-  if ((!name, !email, !phone, !address)) {
+  const {
+    name,
+    email,
+    phone,
+    address,
+    post,
+    joinedDate,
+    profileImage,
+    discordProfile,
+    githubProfile,
+    linkedinProfile,
+    emergencyContactName,
+    emergencyContactNumber,
+  } = req.body;
+
+  if (!name || !email || !phone || !address) {
     return res.status(400).json({
       success: false,
-      message: "All fields are required! / Invalid request",
+      message: "Name, email, phone, and address are required!",
     });
   }
 
@@ -17,7 +32,13 @@ const createContact = asyncHandler(async (req, res) => {
       phone,
       address,
       post,
+      joinedDate,
       profileImage,
+      discordProfile,
+      githubProfile,
+      linkedinProfile,
+      emergencyContactName,
+      emergencyContactNumber,
     });
 
     return res.status(201).json({
@@ -30,33 +51,127 @@ const createContact = asyncHandler(async (req, res) => {
         phone: newContact.phone,
         address: newContact.address,
         post: newContact.post,
+        joinedDate: newContact.joinedDate,
         profileImage: newContact.profileImage,
+        discordProfile: newContact.discordProfile,
+        githubProfile: newContact.githubProfile,
+        linkedinProfile: newContact.linkedinProfile,
+        emergencyContactName: newContact.emergencyContactName,
+        emergencyContactNumber: newContact.emergencyContactNumber,
       },
     });
   } catch (error) {
+    console.error("Error creating contact:", error);
     return res.status(500).json({
       success: false,
-      message: "Somting went wrong!!/ Server error!",
+      message: `Server error: ${error.message}`,
     });
   }
 });
 
+// Update a contact by ID
+const updateContact = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    email,
+    phone,
+    address,
+    post,
+    joinedDate,
+    profileImage,
+    discordProfile,
+    githubProfile,
+    linkedinProfile,
+    emergencyContactName,
+    emergencyContactNumber,
+  } = req.body;
+
+  // Validate required fields
+  if (!name || !email || !phone || !address) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name, email, phone, and address are required!',
+    });
+  }
+
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: 'Contact ID is required',
+    });
+  }
+
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(
+      id,
+      {
+        name,
+        email,
+        phone,
+        address,
+        post,
+        joinedDate,
+        profileImage,
+        discordProfile,
+        githubProfile,
+        linkedinProfile,
+        emergencyContactName,
+        emergencyContactNumber,
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedContact) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact not found',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Contact updated successfully',
+      id: updatedContact._id,
+      name: updatedContact.name,
+      email: updatedContact.email,
+      phone: updatedContact.phone,
+      address: updatedContact.address,
+      post: updatedContact.post,
+      joinedDate: updatedContact.joinedDate,
+      profileImage: updatedContact.profileImage,
+      discordProfile: updatedContact.discordProfile,
+      githubProfile: updatedContact.githubProfile,
+      linkedinProfile: updatedContact.linkedinProfile,
+      emergencyContactName: updatedContact.emergencyContactName,
+      emergencyContactNumber: updatedContact.emergencyContactNumber,
+    });
+  } catch (error) {
+    console.error('Error updating contact:', error);
+    return res.status(500).json({
+      success: false,
+      message: `Server error: ${error.message}`,
+    });
+  }
+});
+
+
+// Get all contacts
 const getContacts = asyncHandler(async (req, res) => {
   const contacts = await Contact.find()
     .sort({ createdAt: -1 })
     .select({ __v: 0 });
-  const formattedData = contacts.map((c) => {
-    return {
-      id: c._id,
-      name: c.name,
-      email: c.email,
-      phone: c.phone,
-      address: c.address,
-      post: c.post,
-      profileImage: c.profileImage,
-      createdAt: c?.createdAt || null,
-    };
-  });
+  const formattedData = contacts.map((c) => ({
+    id: c._id,
+    name: c.name,
+    email: c.email,
+    phone: c.phone,
+    address: c.address,
+    post: c.post,
+    joinedDate: c.joinedDate,
+    profileImage: c.profileImage,
+    createdAt: c?.createdAt || null,
+  }));
   return res.status(200).json(formattedData);
 });
 
@@ -91,9 +206,10 @@ const deleteContact = asyncHandler(async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Error deleting contact:", error);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong! Server error",
+      message: `Server error: ${error.message}`,
     });
   }
 });
@@ -127,11 +243,12 @@ const deleteContacts = asyncHandler(async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Error deleting contacts:", error);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong! Server error",
+      message: `Server error: ${error.message}`,
     });
   }
 });
 
-export { createContact, getContacts, deleteContact, deleteContacts };
+export { createContact, updateContact, getContacts, deleteContact, deleteContacts };

@@ -38,7 +38,14 @@ const contactSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    githubProfile: {
+      type: String,
+    },
     post: {
+      type: String,
+      require: true,
+    },
+    joinedDate: {
       type: String,
       require: true,
     },
