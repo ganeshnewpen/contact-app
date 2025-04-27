@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getContacts } from "../services/contacts";
 import { format } from "date-fns";
 import { FaSignOutAlt } from "react-icons/fa";
@@ -9,12 +9,11 @@ const Dashboard = () => {
   const [contacts, setContacts] = useState([]);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const fetchContacts = async () => {
       try {
         const data = await getContacts();
-        console.log("Fetched contacts:", data); // Debug: Inspect data
+        // console.log("Fetched contacts:", data); // Debug: Inspect data
         setContacts(data);
       } catch (error) {
         console.error("Failed to fetch contacts:", error);
@@ -24,7 +23,7 @@ const Dashboard = () => {
   }, []);
 
   const today = new Date();
-  const todayMonthDay = format(today, "MM-dd"); // e.g., "04-27"
+  const todayMonthDay = format(today, "MM-dd");
 
   const isValidDateFormat = (dateStr) => {
     if (typeof dateStr !== "string") return false;
@@ -104,7 +103,7 @@ const Dashboard = () => {
                         }:`,
                         contact.dob
                       );
-                      return null; // Skip invalid entries
+                      return null;
                     }
                     return (
                       <li
