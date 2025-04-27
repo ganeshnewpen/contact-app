@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub, FaDiscord, FaSignOutAlt } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaDiscord, FaArrowCircleLeft } from "react-icons/fa";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../services/auth";
@@ -93,12 +93,13 @@ function ContactsPage() {
 
   return (
     <div className="contacts-page">
-      <header>
+      <header className="flex-column align-items-start gap-3">
         <Link to="/dashboard" className="text-decoration-none text-reset">
-          <h1 className="fs-4 fw-bold">Contacts ({contacts.length})</h1>
+        <FaArrowCircleLeft size={24} />
         </Link>
+        <h1 className="fs-4 fw-bold">Contact Lists ({contacts.length})</h1>
       </header>
-
+    
       <div className="content">
         <ContactList
           contacts={contacts}
