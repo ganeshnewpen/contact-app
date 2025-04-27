@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaDiscord, FaSignOutAlt } from "react-icons/fa";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../services/auth";
@@ -11,6 +11,7 @@ import {
 import ContactList from "../components/ContactList";
 import { getStringAvatar } from "../utils/helpers";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 function ContactsPage() {
   const [contacts, setContacts] = useState([]);
@@ -90,22 +91,15 @@ function ContactsPage() {
     setModalContact({}); // Open modal for new contact
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
     <div className="contacts-page">
       <header>
-        <h1>X-Contact</h1>
-        <button className="btn btn-danger btn-sm" onClick={handleLogout}>
-          Logout
-        </button>
+        <Link to="/dashboard" className="text-decoration-none text-reset">
+          <h1 className="fs-4 fw-bold">Contacts ({contacts.length})</h1>
+        </Link>
       </header>
 
       <div className="content">
-        <h4 className="mt-5">Contacts ({contacts.length})</h4>
         <ContactList
           contacts={contacts}
           onView={handleView}
@@ -168,12 +162,9 @@ function ContactsPage() {
                     </div>
                   )}
                   <h5 className="fw-semibold">{viewingContact.name}</h5>
-                  <span className="text-secondary">
-                    {viewingContact.post || "—"}
-                  </span>
 
-                  <p className="mt-2 mb-0">
-                    <strong>Joined Date:</strong>{" "}
+                  <p className="mt-2 mb-0 text-muted">
+                    Joined Date:{" "}
                     {viewingContact.joinedDate
                       ? format(
                           new Date(viewingContact.joinedDate),
@@ -218,6 +209,11 @@ function ContactsPage() {
                     )}
                   </div>
                   <div className="text-start mt-3 border-top pt-3">
+                    <p className="mb-2">
+                      <strong>Post / Designation:</strong>{" "}
+                      {viewingContact.post || "—"}
+                    </p>
+
                     <p className="mb-2">
                       <strong>Email:</strong>{" "}
                       <a

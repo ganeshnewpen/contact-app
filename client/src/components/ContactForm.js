@@ -7,6 +7,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
     email: "",
     phone: "",
     address: "",
+    dob: "",
     post: "",
     joinedDate: "",
     profileImage: "",
@@ -22,6 +23,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
     email: ic.email || "",
     phone: ic.phone || "",
     address: ic.address || "",
+    dob: ic.dob || "",
     post: ic.post || "",
     joinedDate: ic.joinedDate || "",
     profileImage: ic.profileImage || "",
@@ -40,6 +42,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
       email: ic.email || "",
       phone: ic.phone || "",
       address: ic.address || "",
+      dob: ic.dob || "",
       post: ic.post || "",
       joinedDate: ic.joinedDate || "",
       profileImage: ic.profileImage || "",
@@ -164,8 +167,24 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
           </div>
 
           <div className="mb-3 col-lg-6">
+            <label htmlFor="dob" className="form-label">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              id="dob"
+              name="dob"
+              value={contact.dob}
+              onChange={handleChange}
+              placeholder="Enter date of birth"
+              required
+            />
+          </div>
+
+          <div className="mb-3 col-lg-6">
             <label htmlFor="post" className="form-label">
-              Position
+              Position / Designation
             </label>
             <input
               type="text"
@@ -254,7 +273,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
           </div>
 
           <div className="mb-3 mt-3 col-lg-12">
-            <span className="badge bg-primary d-inline-block mb-2">
+            <span className="badge bg-primary fw-normal d-inline-block mb-2">
               Contact Person
             </span>
             <div className="row">
@@ -291,10 +310,10 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
           </div>
         </div>
 
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-start">
           <button
             type="button"
-            className="btn btn-secondary me-2"
+            className="btn btn-outline-dark me-2"
             onClick={onCancel}
             disabled={isSubmitting}
           >

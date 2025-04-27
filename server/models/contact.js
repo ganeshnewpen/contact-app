@@ -18,6 +18,10 @@ const contactSchema = new mongoose.Schema(
       type: String,
       default: "N/A",
     },
+    dob: {
+      type: String,
+      default: "N/A",
+    },
     mapAddress: {
       type: String,
       default: "N/A",

@@ -6,24 +6,24 @@ import Dashboard from './pages/Dashboard';
 import './Style.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route 
-          path="/contacts" 
+        <Route
+          path="/dashboard"
           element={
-            getCurrentUser() ? (
-              <ContactsPage />
-              // <Dashboard/>
-            ) : (
-              <Navigate to="/login" />
-            )
-          } 
+            getCurrentUser() ? <Dashboard /> : <Navigate to="/login" />
+          }
         />
-        <Route path="*" element={<Navigate to="/contacts" />} />
+        <Route  
+          path="/contacts"
+          element={
+            getCurrentUser() ? <ContactsPage /> : <Navigate to="/login" />
+          }
+        />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </BrowserRouter>
   );

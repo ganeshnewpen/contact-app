@@ -2,9 +2,10 @@
 
 body {
   font-family: "Inter", sans-serif !important;
+  background-color: #f0f0ff !important;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -123,6 +124,11 @@ header {
   height: 48px;
 }
 
+.form-ui :is(input:focus, select:focus) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .form-ui label {
   font-weight: 500;
 }
@@ -131,7 +137,21 @@ header {
   color: #b0b0b0 !important;
 }
 
+.pass-btn {
+  background-color: transparent;
+  position: absolute !important;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0 !important;
+}
+
 .contact-action-buttons button {
   border: 0;
   border-radius: 4px;
+}
+
+.bg-grad-dash{
+  background: #4f8cb3;
+background: linear-gradient(90deg, rgba(5, 42, 110, 0.62) 0%, rgba(107, 27, 197, 0.795) 50%, rgba(237, 163, 83, 0.66) 100%);
 }

@@ -31,7 +31,7 @@ function ContactCard({ contact, onView, onEdit, onDelete }) {
               {getStringAvatar(contact.name)}
             </div>
           )}
-          <span class="fw-semibold text-nowrap">{contact.name}</span>
+          <span class="fw-semibold text-nowrap">{contact.name} </span>
         </div>
       </td>
       <td>

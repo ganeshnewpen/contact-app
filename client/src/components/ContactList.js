@@ -1,8 +1,8 @@
+import { useState } from "react";
 import ContactCard from "./ContactCard";
 import ContactForm from "./ContactForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function ContactList({
   contacts,
@@ -14,20 +14,48 @@ function ContactList({
   setModalContact,
   onSave,
 }) {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const handleCancel = () => {
     setModalContact(null);
   };
 
+  // Filter contacts based on search query
+  const filteredContacts = contacts.filter((contact) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      (contact.name?.toLowerCase() || "").includes(query) ||
+      (contact.email?.toLowerCase() || "").includes(query) ||
+      (contact.phone?.toLowerCase() || "").includes(query) ||
+      (contact.post?.toLowerCase() || "").includes(query) ||
+      (contact.address?.toLowerCase() || "").includes(query)
+    );
+  });
+
   return (
     <div>
-      <div className="mb-3 text-end">
+      <div className="mb-3 d-flex justify-content-end align-items-center">
         <button className="btn btn-outline-dark" onClick={onAddNew}>
           <FontAwesomeIcon icon={faPlus} /> Add New
         </button>
       </div>
+      <div className="d-flex justify-content-end">
+        <div className="input-group" style={{ width: "fit-content" }}>
+          <span className="input-group-text">
+            <FontAwesomeIcon icon={faSearch} />
+          </span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search contacts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
 
       <div className="table-responsive">
-        <table className="table contact-table">
+        <table className="table table-hover table-bordered contact-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -39,14 +67,16 @@ function ContactList({
             </tr>
           </thead>
           <tbody>
-            {contacts.length === 0 ? (
+            {filteredContacts.length === 0 ? (
               <tr>
-                <td colSpan="7" style={{ textAlign: "center" }}>
-                  No contacts yet. Add your first contact!
+                <td colSpan="6" style={{ textAlign: "center" }}>
+                  {searchQuery
+                    ? "No contacts match your search."
+                    : "No contacts yet. Add your first contact!"}
                 </td>
               </tr>
             ) : (
-              contacts.map((contact) => (
+              filteredContacts.map((contact) => (
                 <ContactCard
                   key={contact.id}
                   contact={contact}
@@ -71,7 +101,7 @@ function ContactList({
           <div
             className="modal-dialog modal-lg modal-dialog-centered"
             role="document"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-content">
               <div className="modal-header">
