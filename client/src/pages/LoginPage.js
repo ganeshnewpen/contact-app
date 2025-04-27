@@ -50,7 +50,7 @@ function LoginPage() {
           <form onSubmit={handleSubmit} className="form-ui">
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
-                Email
+                Email*
               </label>
               <input
                 type="email"
@@ -65,7 +65,7 @@ function LoginPage() {
             </div>
             <div className="mb-3 position-relative">
               <label htmlFor="password" className="form-label">
-                Password
+                Password*
               </label>
               <div className="form-grdoup position-relative">
                 <input
