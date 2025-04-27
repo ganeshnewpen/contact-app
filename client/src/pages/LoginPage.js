@@ -87,7 +87,7 @@ function LoginPage() {
                 </button>
               </div>
             </div>
-            <button type="submit" className="btn btn-dark py-2 w-100">
+            <button type="submit" className="btn bg-grad-dash py-2 w-100">
               Login
             </button>
           </form>
