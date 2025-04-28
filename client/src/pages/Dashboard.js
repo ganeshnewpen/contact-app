@@ -4,6 +4,7 @@ import { getContacts } from "../services/contacts";
 import { format } from "date-fns";
 import { FaSignOutAlt } from "react-icons/fa";
 import { getCurrentUser, logout } from "../services/auth";
+import { getGreeting } from "../utils/helpers";
 
 const Dashboard = () => {
   const [contacts, setContacts] = useState([]);
@@ -64,7 +65,11 @@ const Dashboard = () => {
   return (
     <div className="container my-5">
       <div className="mb-4 d-flex justify-content-between align-items-center">
-        <h2 className="fw-bold">Dashboard</h2>
+        <div className="wrap">
+          <h2 className="fw-bold">Dashboard</h2>
+          <p>Welcome to Dashboard! {getGreeting("Admin")} </p>
+        </div>
+
         <button className="btn btn-danger btn-sm" onClick={handleLogout}>
           <FaSignOutAlt size={18} /> Logout
         </button>

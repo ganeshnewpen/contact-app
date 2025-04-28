@@ -146,7 +146,7 @@ function ContactsPage() {
                     <img
                       src={viewingContact.profileImage}
                       alt={viewingContact.name}
-                      className="rounded-circle mb-3 border"
+                      className="rounded-circle mb-3 border border-secondary"
                       width="100"
                       height="100"
                       style={{ objectFit: "cover" }}

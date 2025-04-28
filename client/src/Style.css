@@ -25,6 +25,11 @@ body {
 }
 
 .contact-table th {
+  background-color: #b4d9f0 !important;
+}
+
+
+.contact-table th {
   width: 100px;
   background-color: #f8f9fa;
 }

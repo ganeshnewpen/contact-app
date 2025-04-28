@@ -1,3 +1,4 @@
+// text avatar
 export const getStringAvatar = (name) => {
   if (!name || typeof name !== "string") return "";
 
@@ -10,3 +11,20 @@ export const getStringAvatar = (name) => {
 
   return `${firstInitial}${lastInitial}`;
 };
+
+//time greetings
+export function getGreeting(name = null) {
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting = "";
+
+  if (hour < 12) {
+    greeting = "Good Morning";
+  } else if (hour < 17) {
+    greeting = "Good Afternoon";
+  } else {
+    greeting = "Good Evening";
+  }
+
+  return `${greeting}, ${name}!`;
+}

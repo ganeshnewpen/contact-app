@@ -21,12 +21,12 @@ function ContactCard({ contact, onView, onEdit, onDelete }) {
               width="36"
               height="36"
               onError={() => setImageError(true)}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover",outline: "2px solid #c7c7c7" }}
             />
           ) : (
             <div
               className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center fw-semibold"
-              style={{ width: "36px", height: "36px", fontSize: "16px" }}
+              style={{ width: "36px", height: "36px", fontSize: "16px", outline: "2px solid #c7c7c7" }}
             >
               {getStringAvatar(contact.name)}
             </div>
