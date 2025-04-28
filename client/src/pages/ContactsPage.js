@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub, FaDiscord, FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../services/auth";
@@ -9,6 +9,7 @@ import {
   deleteContact,
 } from "../services/contacts";
 import ContactList from "../components/ContactList";
+import ContactModal from "../components/ContactModal";
 import { getStringAvatar } from "../utils/helpers";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
@@ -33,7 +34,7 @@ function ContactsPage() {
     const fetchContacts = async () => {
       try {
         const data = await getContacts();
-        console.log("featched contacts", data)
+        console.log("featched contacts", data);
         setContacts(data);
       } catch (error) {
         console.error("Failed to fetch contacts:", error);
@@ -97,11 +98,11 @@ function ContactsPage() {
     <div className="contacts-page">
       <header className="flex-column align-items-start gap-3">
         <Link to="/dashboard" className="text-decoration-none text-reset">
-        <FaArrowCircleLeft size={24} />
+          <FaArrowCircleLeft size={24} />
         </Link>
         <h1 className="fs-4 fw-bold">Contact Lists ({contacts.length})</h1>
       </header>
-    
+
       <div className="content">
         <ContactList
           contacts={contacts}
@@ -113,151 +114,13 @@ function ContactsPage() {
           setModalContact={setModalContact}
           onSave={handleSave}
         />
-
-        {viewingContact && (
-          <div
-            className="modal fade show"
-            style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="contactModalLabel"
-            aria-hidden="false"
-            onClick={() => setViewingContact(null)}
-          >
-            <div
-              className="modal-dialog modal-dialog-centered"
-              role="document"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="modal-content shadow-lg border-0">
-                <div className="modal-header bg-light border-bottom">
-                  <h5 className="modal-title fw-bold" id="contactModalLabel">
-                    Contact Details
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setViewingContact(null)}
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="modal-body p-4 text-center">
-                  {viewingContact.profileImage && !imageError ? (
-                    <img
-                      src={viewingContact.profileImage}
-                      alt={viewingContact.name}
-                      className="rounded-circle mb-3 border border-secondary"
-                      width="100"
-                      height="100"
-                      style={{ objectFit: "cover" }}
-                      onError={() => setImageError(true)}
-                    />
-                  ) : (
-                    <div
-                      className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center mx-auto mb-3 border fw-bold"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        fontSize: "32px",
-                      }}
-                    >
-                      {getStringAvatar(viewingContact.name)}
-                    </div>
-                  )}
-                  <h5 className="fw-semibold">{viewingContact.name}</h5>
-
-                  <p className="mt-2 mb-0 text-muted">
-                    Joined Date:{" "}
-                    {viewingContact.joinedDate
-                      ? format(
-                          new Date(viewingContact.joinedDate),
-                          "MMMM d, yyyy"
-                        )
-                      : "-"}
-                  </p>
-
-                  <div className="d-flex flex-wrap justify-content-center gap-3 mb-3 mt-3">
-                    {viewingContact.linkedinProfile && (
-                      <a
-                        href={viewingContact.linkedinProfile}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="LinkedIn Profile"
-                        className="text-primary"
-                      >
-                        <FaLinkedin size={24} />
-                      </a>
-                    )}
-                    {viewingContact.githubProfile && (
-                      <a
-                        href={viewingContact.githubProfile}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="GitHub Profile"
-                        className="text-dark"
-                      >
-                        <FaGithub size={24} />
-                      </a>
-                    )}
-                    {viewingContact.discordProfile && (
-                      <a
-                        href={viewingContact.discordProfile}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Discord Profile"
-                        className="text-info"
-                      >
-                        <FaDiscord size={24} />
-                      </a>
-                    )}
-                  </div>
-                  <div className="text-start mt-3 border-top pt-3">
-                    <p className="mb-2">
-                      <strong>Post / Designation:</strong>{" "}
-                      {viewingContact.post || "—"}
-                    </p>
-
-                    <p className="mb-2">
-                      <strong>Email:</strong>{" "}
-                      <a
-                        href={`mailto:${viewingContact.email}`}
-                        className="text-decoration-none"
-                      >
-                        {viewingContact.email}
-                      </a>
-                    </p>
-                    <p className="mb-2">
-                      <strong>Phone:</strong> {viewingContact.phone || "—"}
-                    </p>
-                    <p className="mb-2">
-                      <strong>Address:</strong> {viewingContact.address || "—"}
-                    </p>
-                    {(viewingContact.emergencyContactName ||
-                      viewingContact.emergencyContactNumber) && (
-                      <div className="mt-3">
-                        <strong>Emergency Contact Person:</strong>
-                        <p className="mb-2 mt-2">
-                          <strong>Name:</strong>{" "}
-                          {viewingContact.emergencyContactName || "—"}
-                        </p>
-                        <p className="mb-2">
-                          <strong>Phone:</strong>
-                          &nbsp;{" "}
-                          <a
-                            href={`tel:${viewingContact.emergencyContactNumber}`}
-                            className="text-decoration-none"
-                          >
-                            {viewingContact.emergencyContactNumber}
-                          </a>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <ContactModal
+          contact={viewingContact}
+          onClose={() => setViewingContact(null)}
+          imageError={imageError}
+          setImageError={setImageError}
+          getStringAvatar={getStringAvatar}
+        />
       </div>
     </div>
   );
