@@ -19,6 +19,7 @@ function ContactsPage() {
   const [modalContact, setModalContact] = useState(null); // Controls modal (null, new, or editing contact)
   const [imageError, setImageError] = useState(false); // Track image loading errors
   const navigate = useNavigate();
+  console.log(viewingContact);
 
   // Check auth
   useEffect(() => {
@@ -32,6 +33,7 @@ function ContactsPage() {
     const fetchContacts = async () => {
       try {
         const data = await getContacts();
+        console.log("featched contacts", data)
         setContacts(data);
       } catch (error) {
         console.error("Failed to fetch contacts:", error);

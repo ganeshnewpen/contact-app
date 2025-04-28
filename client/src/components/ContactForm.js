@@ -22,7 +22,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
     name: ic.name || "",
     email: ic.email || "",
     phone: ic.phone || "",
-    address: ic.address || "",
+    address: ic.address || "",  
     dob: ic.dob || "",
     post: ic.post || "",
     joinedDate: ic.joinedDate || "",

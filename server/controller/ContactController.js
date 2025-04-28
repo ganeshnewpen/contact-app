@@ -43,6 +43,8 @@ const createContact = asyncHandler(async (req, res) => {
       emergencyContactNumber,
     });
 
+    console.log(newContact);
+
     return res.status(201).json({
       success: true,
       message: "Contact info created/saved successfully!",
@@ -95,14 +97,14 @@ const updateContact = asyncHandler(async (req, res) => {
   if (!name || !email || !phone || !address) {
     return res.status(400).json({
       success: false,
-      message: 'Name, email, phone, and address are required!',
+      message: "Name, email, phone, and address are required!",
     });
   }
 
   if (!id) {
     return res.status(400).json({
       success: false,
-      message: 'Contact ID is required',
+      message: "Contact ID is required",
     });
   }
 
@@ -130,13 +132,13 @@ const updateContact = asyncHandler(async (req, res) => {
     if (!updatedContact) {
       return res.status(404).json({
         success: false,
-        message: 'Contact not found',
+        message: "Contact not found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Contact updated successfully',
+      message: "Contact updated successfully",
       id: updatedContact._id,
       name: updatedContact.name,
       email: updatedContact.email,
@@ -153,14 +155,13 @@ const updateContact = asyncHandler(async (req, res) => {
       emergencyContactNumber: updatedContact.emergencyContactNumber,
     });
   } catch (error) {
-    console.error('Error updating contact:', error);
+    console.error("Error updating contact:", error);
     return res.status(500).json({
       success: false,
       message: `Server error: ${error.message}`,
     });
   }
 });
-
 
 // Get all contacts
 const getContacts = asyncHandler(async (req, res) => {
@@ -175,8 +176,13 @@ const getContacts = asyncHandler(async (req, res) => {
     address: c.address,
     dob: c.dob,
     post: c.post,
-    joinedDate: c.joinedDate,
     profileImage: c.profileImage,
+    discordProfile: c.discordProfile,
+    linkedinProfile: c.linkedinProfile,
+    githubProfile: c.githubProfile,
+    emergencyContactName: c.emergencyContactName,
+    emergencyContactNumber: c.emergencyContactNumber,
+    joinedDate: c.joinedDate,
     createdAt: c?.createdAt || null,
   }));
   return res.status(200).json(formattedData);
@@ -258,4 +264,10 @@ const deleteContacts = asyncHandler(async (req, res) => {
   }
 });
 
-export { createContact, updateContact, getContacts, deleteContact, deleteContacts };
+export {
+  createContact,
+  updateContact,
+  getContacts,
+  deleteContact,
+  deleteContacts,
+};

@@ -4,15 +4,15 @@ const contactSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
     phone: {
       type: String,
-      require: true,
+      required: true,
     },
     address: {
       type: String,
@@ -22,17 +22,17 @@ const contactSchema = new mongoose.Schema(
       type: String,
       default: "N/A",
     },
-    mapAddress: {
-      type: String,
-      default: "N/A",
-    },
+    // mapAddress: {
+    //   type: String,
+    //   default: "N/A",
+    // },
     emergencyContactName: {
       type: String,
-      require: true,
+      required: true,
     },
     emergencyContactNumber: {
       type: String,
-      require: true,
+      required: true,
     },
     discordProfile: {
       type: String,
@@ -40,22 +40,22 @@ const contactSchema = new mongoose.Schema(
     },
     linkedinProfile: {
       type: String,
-      require: true,
+      required: true,
     },
     githubProfile: {
       type: String,
     },
     post: {
       type: String,
-      require: true,
+      required: true,
     },
     joinedDate: {
       type: String,
-      require: true,
+      required: true,
     },
     profileImage: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   { timestamps: true }
