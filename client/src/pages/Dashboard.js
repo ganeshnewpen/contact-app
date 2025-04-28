@@ -23,6 +23,13 @@ const Dashboard = () => {
     fetchContacts();
   }, []);
 
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      navigate("/login"); // redirect if not logged in
+    }
+  }, []);
+
   const today = new Date();
   const todayMonthDay = format(today, "MM-dd");
 

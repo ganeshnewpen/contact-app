@@ -11,12 +11,25 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await login(email, password);
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //     setError("Invalid email or password");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
-      navigate("/dashboard");
+      const user = await login(email, password);
+      if (user) {
+        navigate("/dashboard");
+      }
     } catch (err) {
+      console.error(err);
       setError("Invalid email or password");
     }
   };
@@ -87,7 +100,10 @@ function LoginPage() {
                 </button>
               </div>
             </div>
-            <button type="submit" className="btn bg-grad-dash text-white py-2 w-100">
+            <button
+              type="submit"
+              className="btn bg-grad-dash text-white py-2 w-100"
+            >
               Login
             </button>
           </form>

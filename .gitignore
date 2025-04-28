@@ -19,6 +19,7 @@ Thumbs.db
 client/build/
 server/dist/
 server/build/
+# client/build/build.zip
 
 # IDE files
 .vscode/
