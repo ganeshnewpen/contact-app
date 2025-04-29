@@ -1,39 +1,39 @@
 {
-  "users": [
-    {
-      "id": "1",
-      "email": "admin@contact.com",
-      "password": "4321",
-      "isAdmin": true
-    }
-  ],
-  "contacts": [
-    {
-      "name": " Aladdin Dickson",
-      "email": "huhoh@mailinator.com",
-      "phone": "+1 (385) 791-7798",
-      "address": "Sed doloribus ab rer",
-      "post": "Exercitation quis no",
-      "profileImage": "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
-      "id": "916b"
-    },
-    {
-      "name": "Denton Cote aa",
-      "email": "jajojazi@mailinator.com",
-      "phone": "+1 (151) 405-5798",
-      "address": "Nulla dolores qui as",
-      "post": "Reprehenderit dolor",
-      "profileImage": "https://www.hala.ca",
-      "id": "35a5"
-    },
-    {
-      "id": "3731",
-      "name": "Hyatt Flores",
-      "email": "xuhamoves@mailinator.com",
-      "phone": "+1 (832) 425-4243",
-      "address": "Sequi quia aliquam c",
-      "post": "Consequatur ex iure ",
-      "profileImage": "https://www.pobuvyredadirih.co.uk"
-    }
-  ]
-}
+    "users": [
+      {
+        "id": "1",
+        "email": "admin@contact.com",
+        "password": "4321",
+        "isAdmin": true
+      }
+    ],
+    "contacts": [
+      {
+        "name": " Aladdin Dickson",
+        "email": "huhoh@mailinator.com",
+        "phone": "+1 (385) 791-7798",
+        "address": "Sed doloribus ab rer",
+        "post": "Exercitation quis no",
+        "profileImage": "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
+        "id": "916b"
+      },
+      {
+        "name": "Denton Cote aa",
+        "email": "jajojazi@mailinator.com",
+        "phone": "+1 (151) 405-5798",
+        "address": "Nulla dolores qui as",
+        "post": "Reprehenderit dolor",
+        "profileImage": "https://www.hala.ca",
+        "id": "35a5"
+      },
+      {
+        "id": "3731",
+        "name": "Hyatt Flores",
+        "email": "xuhamoves@mailinator.com",
+        "phone": "+1 (832) 425-4243",
+        "address": "Sequi quia aliquam c",
+        "post": "Consequatur ex iure ",
+        "profileImage": "https://www.pobuvyredadirih.co.uk"
+      }
+    ]
+  }

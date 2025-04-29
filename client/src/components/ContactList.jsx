@@ -20,17 +20,30 @@ function ContactList({
     setModalContact(null);
   };
 
-  // Filter contacts based on search query
-  const filteredContacts = contacts.filter((contact) => {
-    const query = searchQuery.toLowerCase();
-    return (
-      (contact.name?.toLowerCase() || "").includes(query) ||
-      (contact.email?.toLowerCase() || "").includes(query) ||
-      (contact.phone?.toLowerCase() || "").includes(query) ||
-      (contact.post?.toLowerCase() || "").includes(query) ||
-      (contact.address?.toLowerCase() || "").includes(query)
-    );
-  });
+  // const filteredContacts = contacts?.filter((contact) => {
+  //   const query = searchQuery.toLowerCase();
+  //   return (
+  //     (contact.name?.toLowerCase() || "").includes(query) ||
+  //     (contact.email?.toLowerCase() || "").includes(query) ||
+  //     (contact.phone?.toLowerCase() || "").includes(query) ||
+  //     (contact.post?.toLowerCase() || "").includes(query) ||
+  //     (contact.address?.toLowerCase() || "").includes(query)
+  //   );
+  // });
+
+  const filteredContacts = Array.isArray(contacts) 
+    ? contacts.filter((contact) => {
+        const query = searchQuery.toLowerCase();
+        return (
+          (contact.name?.toLowerCase() || "").includes(query) ||
+          (contact.email?.toLowerCase() || "").includes(query) ||
+          (contact.phone?.toLowerCase() || "").includes(query) ||
+          (contact.post?.toLowerCase() || "").includes(query) ||
+          (contact.address?.toLowerCase() || "").includes(query)
+        );
+      })
+    : [];
+
 
   return (
     <div>

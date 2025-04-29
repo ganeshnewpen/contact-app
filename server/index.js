@@ -1,8 +1,13 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+import path from "path";
+import { fileURLToPath } from "url";
+
 dotenv.config();
 const app = express();
+
 const port = process.env.PORT || 8086;
 
 import morgan from "morgan";
@@ -10,18 +15,16 @@ import dbConnect from "./db.js";
 
 app.use(express.json());
 
-const allowedOrigin = ['http://localhost:3000', 'http://localhost:3001'];
-var corsOptions = {
-    origin: function (origin, callback) {
-      if (allowedOrigin.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    }
-  }
-
-app.use(cors(corsOptions));
+const allowedOrigin = {
+  origin: [
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "http://localhost:5173",
+  ],
+  credentials: true,
+};
+app.use(cors(allowedOrigin));
+app.use(helmet());
 
 dbConnect();
 
@@ -29,12 +32,30 @@ app.use(morgan("combined"));
 
 import contactRouter from "./routes/contactRoute.js";
 
-app.get("/", (req, res) => res.send("Hello World!"));
+// app.get("/", (req, res) => res.send("Hello World!"));
 app.use("/api/contact", contactRouter);
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.json({ success: true });
-});
+// app.get("/", (req, res) => {
+//   res.render
+// });
 
-app.listen(port, () => console.log(`Example app listening at: ` + port));
+// app.use(express.static(path.join(__dirname, 'dist')));
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+// router.get("/:", (req, res) => {
+//   res.send("Invalid route");
+// });
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
+
+app.listen(port, () => console.log(`Contact app listening at: ` + port));

@@ -11,10 +11,9 @@ import {
 import ContactList from "../components/ContactList";
 import ContactModal from "../components/ContactModal";
 import { getStringAvatar } from "../utils/helpers";
-import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
-function ContactsPage() {
+export default function ContactsPage() {
   const [contacts, setContacts] = useState([]);
   const [viewingContact, setViewingContact] = useState(null);
   const [modalContact, setModalContact] = useState(null); // Controls modal (null, new, or editing contact)
@@ -125,5 +124,3 @@ function ContactsPage() {
     </div>
   );
 }
-
-export default ContactsPage;
