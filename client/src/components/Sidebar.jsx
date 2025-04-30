@@ -1,74 +1,72 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// import React from 'react';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Nav, Navbar, Button } from 'react-bootstrap';
+import { getCurrentUser, logout } from "../services/auth";
+
+import {
+  FaUsers,
+  FaMoneyBillAlt,
+  FaCalendarCheck,
+  FaClipboardList,
+  FaBriefcase,
+  FaChartLine,
+  FaHistory,
+  FaBuilding,
+  FaSignOutAlt
+} from 'react-icons/fa';
 import SidebarItem from './SidebarItem';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+const Sidebar = ({ activePath }) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
+  const handleLogout = () => { logout(); navigate("/login"); };
 
-  const navItems = [
-    { to: '/admin/dashboard', label: 'Dashboard', icon: 'home' },
-    { to: '/admin/departments', label: 'Departments', icon: 'building-office' },
-    { to: '/admin/employees', label: 'Employees', icon: 'users' },
-    { to: '/admin/salaries', label: 'Salaries', icon: 'currency-dollar' },
-    { to: '/admin/attendance', label: 'Attendance', icon: 'calendar-days' },
-    { to: '/admin/notices', label: 'Notices', icon: 'megaphone' },
-    { to: '/admin/projects', label: 'Projects', icon: 'briefcase' },
-    { to: '/admin/performance', label: 'Performance', icon: 'chart-bar' },
-    { to: '/admin/audit-logs', label: 'Audit Logs', icon: 'document-text' },
+
+
+
+  const menuItems = [
+    { href: '/admin/dashboard', icon: FaChartLine, title: 'Dashboard' },
+    { href: '/admin/departments', icon: FaBuilding, title: 'Departments' },
+    { href: '/contacts', icon: FaUsers, title: 'Employees' },
+    { href: '/attendance', icon: FaCalendarCheck, title: 'Attendance' },
+    { href: '/leaves', icon: FaClipboardList, title: 'Leave Management' },
+    { href: '/salaries', icon: FaMoneyBillAlt, title: 'Salaries' },
+    { href: '/projects', icon: FaBriefcase, title: 'Projects' },
+    { href: '/performance', icon: FaChartLine, title: 'Performance' },
+    { href: '/audit-logs', icon: FaHistory, title: 'Audit Logs' }
   ];
 
   return (
-    <>
-      {/* Sidebar */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-blue-500 text-white w-64 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-lg`}
-      >
-        {/* Logo/Title */}
-        <div className="p-6 border-b border-gray-700">
-          <h1 className="text-2xl font-bold tracking-tight">HR Admin</h1>
-        </div>
+    <Navbar bg="dark" variant="dark" expand="lg" className="flex-column sidebar">
+      <Navbar.Brand href="/" className="mb-4 p-3">
+        <h4>HRM System</h4>
+      </Navbar.Brand>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navItems.map((item) => (
-            <SidebarItem
-              key={item.to}
-              to={item.to}
-              label={item.label}
-              icon={item.icon}
-              onClick={() => setIsOpen(false)} // Close sidebar on mobile click
-            />
-          ))}
-        </nav>
-      </aside>
+      <Nav className="flex-column w-100">
+        {menuItems.map((item) => (
+          <SidebarItem
+            key={item.href}
+            href={item.href}
+            icon={item.icon}
+            title={item.title}
+            isActive={activePath === item.href}
+          />
+        ))}
+      </Nav>
 
-      {/* Mobile Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
-          onClick={toggleSidebar}
-        />
-      )}
-
-      {/* Mobile Toggle Button */}
-      <button
-        className="fixed top-4 left-4 z-50 md:hidden bg-white p-2 rounded-full shadow-md text-primary"
-        onClick={toggleSidebar}
-      >
-        {isOpen ? (
-          <XMarkIcon className="w-6 h-6" />
-        ) : (
-          <Bars3Icon className="w-6 h-6" />
-        )}
-      </button>
-    </>
+      <div className="mt-auto p-3 w-100">
+        <Button variant="danger" className="w-100" onClick={handleLogout}>
+          <FaSignOutAlt className="me-2" /> Logout
+        </Button>
+      </div>
+    </Navbar>
   );
 };
 

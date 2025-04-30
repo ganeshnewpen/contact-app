@@ -31,9 +31,13 @@ dbConnect();
 app.use(morgan("combined"));
 
 import contactRouter from "./routes/contactRoute.js";
+// import departmentRouter from "./routes/departmentRoute.js";
+
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 app.use("/api/contact", contactRouter);
+// app.use("/api/department", departmentRouter);
+
 
 // app.get("/", (req, res) => {
 //   res.render

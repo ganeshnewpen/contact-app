@@ -18,4 +18,4 @@ departmentSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Department", departmentSchema);
+export default mongoose.model("Department", departmentSchema);
