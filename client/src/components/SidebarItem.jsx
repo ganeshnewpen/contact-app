@@ -6,7 +6,7 @@ const SidebarItem = ({ href, icon: Icon, title, isActive = false }) => {
   //   isActive,
   //   matches: window.location.pathname === href
   // });
-  console.log(window.location.pathname, href)
+  // console.log(window.location.pathname, href)
   return (
     <Nav.Link
       href={href}

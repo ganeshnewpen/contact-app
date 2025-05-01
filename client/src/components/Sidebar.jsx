@@ -34,7 +34,7 @@ const Sidebar = ({ activePath }) => {
   const menuItems = [
     { href: '/admin/dashboard', icon: FaChartLine, title: 'Dashboard' },
     { href: '/admin/departments', icon: FaBuilding, title: 'Departments' },
-    { href: '/contacts', icon: FaUsers, title: 'Employees' },
+    { href: '/admin/employees', icon: FaUsers, title: 'Employees' },
     { href: '/attendance', icon: FaCalendarCheck, title: 'Attendance' },
     { href: '/leaves', icon: FaClipboardList, title: 'Leave Management' },
     { href: '/salaries', icon: FaMoneyBillAlt, title: 'Salaries' },

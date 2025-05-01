@@ -1,26 +1,27 @@
 import { useState } from "react";
-import ContactCard from "./ContactCard";
+import ContactCard from "./EmployeeCard";
 import ContactForm from "./ContactForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
+import EmployeeCard from "./EmployeeCard";
 
-function ContactList({
-  contacts,
+function EmployeeList({
+  employees,
   onView,
   onEdit,
   onDelete,
   onAddNew,
-  modalContact,
-  setModalContact,
+  modalEmployee,
+  setModalEmployee,
   onSave,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleCancel = () => {
-    setModalContact(null);
+    setModalEmployee(null);
   };
 
-  // const filteredContacts = contacts?.filter((contact) => {
+  // const filteredEmployees = employees?.filter((contact) => {
   //   const query = searchQuery.toLowerCase();
   //   return (
   //     (contact.name?.toLowerCase() || "").includes(query) ||
@@ -31,24 +32,25 @@ function ContactList({
   //   );
   // });
 
-  const filteredContacts = Array.isArray(contacts) 
-    ? contacts.filter((contact) => {
-        const query = searchQuery.toLowerCase();
-        return (
-          (contact.name?.toLowerCase() || "").includes(query) ||
-          (contact.email?.toLowerCase() || "").includes(query) ||
-          (contact.phone?.toLowerCase() || "").includes(query) ||
-          (contact.post?.toLowerCase() || "").includes(query) ||
-          (contact.address?.toLowerCase() || "").includes(query)
-        );
-      })
+  const filteredEmployees = Array.isArray(employees)
+    ? employees.filter((contact) => {
+      const query = searchQuery.toLowerCase();
+      return (
+        (contact.name?.toLowerCase() || "").includes(query) ||
+        (contact.email?.toLowerCase() || "").includes(query) ||
+        (contact.phone?.toLowerCase() || "").includes(query) ||
+        (contact.post?.toLowerCase() || "").includes(query) ||
+        (contact.address?.toLowerCase() || "").includes(query)
+      );
+    })
     : [];
 
 
   return (
-    <div>
-      <div className="mb-3 d-flex justify-content-end align-items-center">
-        <button className="btn btn-outline-dark" onClick={onAddNew}>
+    <div className="container">
+      <div className="mb-3 d-flex justify-content-between">
+        <h1 className="page-title mb-0">Employees ({employees.length})</h1>
+        <button className="btn btn-outline-dark mb-auto" onClick={onAddNew}>
           <FontAwesomeIcon icon={faPlus} /> Add New
         </button>
       </div>
@@ -60,7 +62,7 @@ function ContactList({
           <input
             type="text"
             className="form-control"
-            placeholder="Search contacts..."
+            placeholder="Search employees..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -80,19 +82,19 @@ function ContactList({
             </tr>
           </thead>
           <tbody>
-            {filteredContacts.length === 0 ? (
+            {filteredEmployees.length === 0 ? (
               <tr>
                 <td colSpan="6" style={{ textAlign: "center" }}>
                   {searchQuery
-                    ? "No contacts match your search."
-                    : "No contacts yet. Add your first contact!"}
+                    ? "No employees match your search."
+                    : "No employees yet. Add your first employee!"}
                 </td>
               </tr>
             ) : (
-              filteredContacts.map((contact) => (
-                <ContactCard
-                  key={contact.id}
-                  contact={contact}
+              filteredEmployees.map((employee) => (
+                <EmployeeCard
+                  key={employee.id}
+                  employee={employee}
                   onView={onView}
                   onEdit={onEdit}
                   onDelete={onDelete}
@@ -103,7 +105,7 @@ function ContactList({
         </table>
       </div>
 
-      {modalContact !== null && (
+      {modalEmployee !== null && (
         <div
           className="modal fade show"
           style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
@@ -119,7 +121,7 @@ function ContactList({
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">
-                  {modalContact.id ? "Edit Contact" : "Add New Contact"}
+                  {modalEmployee.id ? "Edit Employee" : "Add New Employee"}
                 </h5>
                 <button
                   type="button"
@@ -129,7 +131,7 @@ function ContactList({
               </div>
               <div className="modal-body">
                 <ContactForm
-                  ic={modalContact}
+                  ic={modalEmployee}
                   onSave={onSave}
                   onCancel={handleCancel}
                 />
@@ -142,4 +144,4 @@ function ContactList({
   );
 }
 
-export default ContactList;
+export default EmployeeList;

@@ -1,8 +1,9 @@
 import asyncHandler from "express-async-handler";
-import Contact from "../models/contact.js";
+import Employee from "../models/employee.js";
+import mongoose from "mongoose";
 
-// Create a new contact
-const createContact = asyncHandler(async (req, res) => {
+// Create a new employee
+const createEmployee = asyncHandler(async (req, res) => {
   const {
     name,
     email,
@@ -17,17 +18,25 @@ const createContact = asyncHandler(async (req, res) => {
     linkedinProfile,
     emergencyContactName,
     emergencyContactNumber,
+    departmentId,
   } = req.body;
 
-  if (!name || !email || !phone || !address) {
+  if (!name || !email || !phone || !address || !departmentId) {
     return res.status(400).json({
       success: false,
-      message: "Name, email, phone, and address are required!",
+      message: "Name, email, phone, address and department are required!",
+    });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(departmentId)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid department ID format",
     });
   }
 
   try {
-    const newContact = await Contact.create({
+    const newEmployee = await Employee.create({
       name,
       email,
       phone,
@@ -41,32 +50,16 @@ const createContact = asyncHandler(async (req, res) => {
       linkedinProfile,
       emergencyContactName,
       emergencyContactNumber,
+      department: departmentId,
     });
-
-    console.log(newContact);
 
     return res.status(201).json({
       success: true,
-      message: "Contact info created/saved successfully!",
-      data: {
-        id: newContact._id,
-        name: newContact.name,
-        email: newContact.email,
-        phone: newContact.phone,
-        address: newContact.address,
-        dob: newContact.dob,
-        post: newContact.post,
-        joinedDate: newContact.joinedDate,
-        profileImage: newContact.profileImage,
-        discordProfile: newContact.discordProfile,
-        githubProfile: newContact.githubProfile,
-        linkedinProfile: newContact.linkedinProfile,
-        emergencyContactName: newContact.emergencyContactName,
-        emergencyContactNumber: newContact.emergencyContactNumber,
-      },
+      message: "Employee created successfully!",
+      data: newEmployee,
     });
   } catch (error) {
-    console.error("Error creating contact:", error);
+    console.error("Error creating employee:", error);
     return res.status(500).json({
       success: false,
       message: `Server error: ${error.message}`,
@@ -74,8 +67,8 @@ const createContact = asyncHandler(async (req, res) => {
   }
 });
 
-// Update a contact by ID
-const updateContact = asyncHandler(async (req, res) => {
+// Update a employee
+const updateEmployee = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const {
     name,
@@ -91,25 +84,25 @@ const updateContact = asyncHandler(async (req, res) => {
     linkedinProfile,
     emergencyContactName,
     emergencyContactNumber,
+    departmentId,
   } = req.body;
 
-  // Validate required fields
-  if (!name || !email || !phone || !address) {
+  if (!name || !email || !phone || !address || !departmentId) {
     return res.status(400).json({
       success: false,
-      message: "Name, email, phone, and address are required!",
+      message: "Name, email, phone, address and deparment are required!",
     });
   }
 
   if (!id) {
     return res.status(400).json({
       success: false,
-      message: "Contact ID is required",
+      message: "Employee ID is required",
     });
   }
 
   try {
-    const updatedContact = await Contact.findByIdAndUpdate(
+    const updatedEmployee = await Employee.findByIdAndUpdate(
       id,
       {
         name,
@@ -125,37 +118,38 @@ const updateContact = asyncHandler(async (req, res) => {
         linkedinProfile,
         emergencyContactName,
         emergencyContactNumber,
+        department: departmentId,
       },
       { new: true, runValidators: true }
     );
 
-    if (!updatedContact) {
+    if (!updatedEmployee) {
       return res.status(404).json({
         success: false,
-        message: "Contact not found",
+        message: "Employee not found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Contact updated successfully",
-      id: updatedContact._id,
-      name: updatedContact.name,
-      email: updatedContact.email,
-      phone: updatedContact.phone,
-      address: updatedContact.address,
-      dob: updatedContact.dob,
-      post: updatedContact.post,
-      joinedDate: updatedContact.joinedDate,
-      profileImage: updatedContact.profileImage,
-      discordProfile: updatedContact.discordProfile,
-      githubProfile: updatedContact.githubProfile,
-      linkedinProfile: updatedContact.linkedinProfile,
-      emergencyContactName: updatedContact.emergencyContactName,
-      emergencyContactNumber: updatedContact.emergencyContactNumber,
+      message: "Employee updated successfully",
+      id: updatedEmployee._id,
+      name: updatedEmployee.name,
+      email: updatedEmployee.email,
+      phone: updatedEmployee.phone,
+      address: updatedEmployee.address,
+      dob: updatedEmployee.dob,
+      post: updatedEmployee.post,
+      joinedDate: updatedEmployee.joinedDate,
+      profileImage: updatedEmployee.profileImage,
+      discordProfile: updatedEmployee.discordProfile,
+      githubProfile: updatedEmployee.githubProfile,
+      linkedinProfile: updatedEmployee.linkedinProfile,
+      emergencyContactName: updatedEmployee.emergencyContactName,
+      emergencyContactNumber: updatedEmployee.emergencyContactNumber,
     });
   } catch (error) {
-    console.error("Error updating contact:", error);
+    console.error("Error updating employee:", error);
     return res.status(500).json({
       success: false,
       message: `Server error: ${error.message}`,
@@ -163,12 +157,12 @@ const updateContact = asyncHandler(async (req, res) => {
   }
 });
 
-// Get all contacts
-const getContacts = asyncHandler(async (req, res) => {
-  const contacts = await Contact.find()
+const getEmployees = asyncHandler(async (req, res) => {
+  const employees = await Employee.find()
+    .populate("department")
     .sort({ createdAt: -1 })
     .select({ __v: 0 });
-  const formattedData = contacts.map((c) => ({
+  const formattedData = employees.map((c) => ({
     id: c._id,
     name: c.name,
     email: c.email,
@@ -188,38 +182,38 @@ const getContacts = asyncHandler(async (req, res) => {
   return res.status(200).json(formattedData);
 });
 
-// Delete a single contact by ID
-const deleteContact = asyncHandler(async (req, res) => {
+// Delete a single employee by ID
+const deleteEmployee = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
     return res.status(400).json({
       success: false,
-      message: "Contact ID is required",
+      message: "Employee ID is required",
     });
   }
 
   try {
-    const deletedContact = await Contact.findByIdAndDelete(id);
+    const deletedEmployee = await Employee.findByIdAndDelete(id);
 
-    if (!deletedContact) {
+    if (!deletedEmployee) {
       return res.status(404).json({
         success: false,
-        message: "Contact not found",
+        message: "Employee not found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Contact deleted successfully",
+      message: "Employee deleted successfully",
       data: {
-        contactId: deletedContact._id,
-        name: deletedContact.name,
-        email: deletedContact.email,
+        employeeId: deletedEmployee._id,
+        name: deletedEmployee.name,
+        email: deletedEmployee.email,
       },
     });
   } catch (error) {
-    console.error("Error deleting contact:", error);
+    console.error("Error deleting employee:", error);
     return res.status(500).json({
       success: false,
       message: `Server error: ${error.message}`,
@@ -227,36 +221,36 @@ const deleteContact = asyncHandler(async (req, res) => {
   }
 });
 
-// Delete multiple contacts by IDs
-const deleteContacts = asyncHandler(async (req, res) => {
+// Delete multiple employees by IDs
+const deleteEmployees = asyncHandler(async (req, res) => {
   const { ids } = req.body;
 
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
     return res.status(400).json({
       success: false,
-      message: "An array of contact IDs is required",
+      message: "An array of employee IDs is required",
     });
   }
 
   try {
-    const deleteResult = await Contact.deleteMany({ _id: { $in: ids } });
+    const deleteResult = await Employee.deleteMany({ _id: { $in: ids } });
 
     if (deleteResult.deletedCount === 0) {
       return res.status(404).json({
         success: false,
-        message: "No contacts found with the provided IDs",
+        message: "No employees found with the provided IDs",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: `${deleteResult.deletedCount} contact(s) deleted successfully`,
+      message: `${deleteResult.deletedCount} employee(s) deleted successfully`,
       data: {
         deletedCount: deleteResult.deletedCount,
       },
     });
   } catch (error) {
-    console.error("Error deleting contacts:", error);
+    console.error("Error deleting employees:", error);
     return res.status(500).json({
       success: false,
       message: `Server error: ${error.message}`,
@@ -265,9 +259,9 @@ const deleteContacts = asyncHandler(async (req, res) => {
 });
 
 export {
-  createContact,
-  updateContact,
-  getContacts,
-  deleteContact,
-  deleteContacts,
+  createEmployee,
+  updateEmployee,
+  getEmployees,
+  deleteEmployee,
+  deleteEmployees,
 };

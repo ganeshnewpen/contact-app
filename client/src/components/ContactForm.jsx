@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { getDepartments } from "../services/departments"; // Ensure this function fetches departments
 
 function ContactForm({ ic = {}, onSave, onCancel }) {
+
   const initialState = {
     name: "",
     email: "",
@@ -16,41 +18,36 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
     linkedinProfile: "",
     emergencyContactName: "",
     emergencyContactNumber: "",
+    departmentId: "",
   };
 
   const [contact, setContact] = useState({
-    name: ic.name || "",
-    email: ic.email || "",
-    phone: ic.phone || "",
-    address: ic.address || "",  
-    dob: ic.dob || "",
-    post: ic.post || "",
-    joinedDate: ic.joinedDate || "",
-    profileImage: ic.profileImage || "",
-    discordProfile: ic.discordProfile || "",
-    githubProfile: ic.githubProfile || "",
-    linkedinProfile: ic.linkedinProfile || "",
-    emergencyContactName: ic.emergencyContactName || "",
-    emergencyContactNumber: ic.emergencyContactNumber || "",
+    ...initialState,
+    ...ic,
+    departmentId: ic.departmentId || "",
   });
+
+  const [departments, setDepartments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Reset form when ic changes (e.g., new/edit modal opens)
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const data = await getDepartments();
+        setDepartments(data);
+      } catch (error) {
+        console.error("Failed to fetch departments:", error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
   useEffect(() => {
     setContact({
-      name: ic.name || "",
-      email: ic.email || "",
-      phone: ic.phone || "",
-      address: ic.address || "",
-      dob: ic.dob || "",
-      post: ic.post || "",
-      joinedDate: ic.joinedDate || "",
-      profileImage: ic.profileImage || "",
-      discordProfile: ic.discordProfile || "",
-      githubProfile: ic.githubProfile || "",
-      linkedinProfile: ic.linkedinProfile || "",
-      emergencyContactName: ic.emergencyContactName || "",
-      emergencyContactNumber: ic.emergencyContactNumber || "",
+      ...initialState,
+      ...ic,
+      departmentId: ic.departmentId || "",
     });
   }, [ic]);
 
@@ -73,21 +70,17 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        // title: "Success!",
         text: `Contact ${ic.id ? "updated" : "added"} successfully!`,
         icon: "success",
-        confirmButtonColor: "#3085d6",
         timer: 2000,
       });
     } catch (error) {
       Swal.fire({
         toast: true,
         position: "top-end",
-        // title: "Error!",
         showConfirmButton: false,
         text: "Failed to save contact.",
         icon: "error",
-        confirmButtonColor: "#d33",
         timer: 2000,
       });
     } finally {
@@ -102,7 +95,29 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
         className="p-3 border rounded bg-light form-ui"
       >
         <div className="row">
-          <div className="mb-3 col-lg-12">
+          <div className="mb-3 col-lg-6">
+            <label htmlFor="department" className="form-label">
+              Department *
+            </label>
+            <select
+              className="form-select"
+              id="department"
+              name="departmentId"
+              value={contact.departmentId}
+              onChange={(e) => setContact({ ...contact, departmentId: e.target.value })}
+              required
+              disabled={isSubmitting}
+            >
+              <option value="">Select Department</option>
+              {departments.map((dept) => (
+                <option key={dept._id} value={dept._id}>
+                  {dept.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-3 col-lg-6">
             <label htmlFor="name" className="form-label">
               Name
             </label>

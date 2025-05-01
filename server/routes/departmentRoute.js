@@ -2,13 +2,13 @@ import express from "express";
 const router = express.Router();
 
 import {
-  getAllDepartments,
+  getDepartments,
   createDepartment,
   updateDepartment,
   deleteDepartment,
-} from "../controller/departmentController.js";
+} from "../controller/DepartmentController.js";
 
-router.get("/all", getAllDepartments);
+router.get("/", getDepartments);
 router.post("/create", createDepartment);
 router.put("/update/:id", updateDepartment);
 router.delete("/delete/:id", deleteDepartment);

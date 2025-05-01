@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getCurrentUser } from './services/auth';
 import MainLayout from './layouts/MainLayout';
 import LoginPage from './pages/LoginPage';
-import ContactsPage from './pages/ContactsPage';
+import EmployeesList from './pages/admin/EmployeesList';
 import Dashboard from './pages/admin/Dashboard';
 import DepartmentForm from './pages/admin/DepartmentForm';
 import DepartmentList from './pages/admin/DepartmentList';
@@ -28,7 +28,7 @@ export default function App() {
           </ProtectedRoute>
         }>
           <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/admin/employees" element={<EmployeesList />} />
 
           {/* departments  */}
           <Route path="/admin/departments" element={<DepartmentList />} />

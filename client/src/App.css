@@ -11,50 +11,50 @@ body {
   cursor: pointer;
 }
 
-.contact-table {
+.employee-table {
   width: 100%;
   border-collapse: collapse;
   margin: 15px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.contact-table th,
-.contact-table td {
+.employee-table th,
+.employee-table td {
   vertical-align: middle !important;
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.contact-table th {
+.employee-table th {
   background-color: #b4d9f0 !important;
 }
 
 
-.contact-table th {
+.employee-table th {
   width: 100px;
   background-color: #f8f9fa;
 }
 
-.contact-image-cell {
+.employee-image-cell {
   width: 120px;
   text-align: center;
 }
 
-.contact-avatar {
+.employee-avatar {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.contact-actions-cell {
+.employee-actions-cell {
   display: flex;
   width: 150px;
   text-align: center;
 }
 
-.contact-actions-cell button {
+.employee-actions-cell button {
   margin: 0 5px;
   padding: 6px 12px;
   cursor: pointer;
@@ -88,20 +88,15 @@ body {
   margin: 10px 0;
 }
 
-/* Contacts Page */
-.contacts-page {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.contact-form input {
+.employee-form input {
   display: block;
   width: 100%;
   padding: 8px;
   margin: 5px 0;
 }
 
-.contact-card {
+.employee-card {
   border: 1px solid #ddd;
   padding: 15px;
   margin: 10px 0;
@@ -155,7 +150,7 @@ header {
   border: 0 !important;
 }
 
-.contact-action-buttons button {
+.employee-action-buttons button {
   border: 0;
   border-radius: 4px;
 }
@@ -163,4 +158,14 @@ header {
 .bg-grad-dash {
   background: #4f8cb3;
   background: linear-gradient(90deg, rgba(5, 42, 110, 0.62) 0%, rgba(107, 27, 197, 0.795) 50%, rgba(237, 163, 83, 0.66) 100%);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.breadcrumb a{
+  color: #333;
+  text-decoration: none;
 }

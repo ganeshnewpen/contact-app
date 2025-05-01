@@ -30,13 +30,12 @@ dbConnect();
 
 app.use(morgan("combined"));
 
-import contactRouter from "./routes/contactRoute.js";
-// import departmentRouter from "./routes/departmentRoute.js";
+import employeeRouter from "./routes/employeeRoute.js";
+import departmentRouter from "./routes/departmentRoute.js";
 
 
-// app.get("/", (req, res) => res.send("Hello World!"));
-app.use("/api/contact", contactRouter);
-// app.use("/api/department", departmentRouter);
+app.use("/api/employee", employeeRouter);
+app.use("/api/department", departmentRouter);
 
 
 // app.get("/", (req, res) => {

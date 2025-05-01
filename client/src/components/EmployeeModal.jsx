@@ -2,8 +2,8 @@ import { FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 
-const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAvatar }) => {
-  if (!contact) return null;
+const EmployeeModal = ({ employee, onClose, imageError, setImageError, getStringAvatar }) => {
+  if (!employee) return null;
 
   return (
     <div
@@ -11,7 +11,7 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
       style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
       tabIndex="-1"
       role="dialog"
-      aria-labelledby="contactModalLabel"
+      aria-labelledby="employeeModalLabel"
       aria-hidden="false"
       onClick={onClose}
     >
@@ -22,8 +22,8 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
       >
         <div className="modal-content shadow-lg border-0">
           <div className="modal-header bg-light border-bottom">
-            <h5 className="modal-title fw-bold" id="contactModalLabel">
-              Contact Details
+            <h5 className="modal-title fw-bold" id="employeeModalLabel">
+              Employee Details
             </h5>
             <button
               type="button"
@@ -33,10 +33,10 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
             ></button>
           </div>
           <div className="modal-body p-4 text-center">
-            {contact.profileImage && !imageError ? (
+            {employee.profileImage && !imageError ? (
               <img
-                src={contact.profileImage}
-                alt={contact.name}
+                src={employee.profileImage}
+                alt={employee.name}
                 className="rounded-circle mb-3 border border-secondary"
                 width="100"
                 height="100"
@@ -52,22 +52,22 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
                   fontSize: "32px",
                 }}
               >
-                {getStringAvatar(contact.name)}
+                {getStringAvatar(employee.name)}
               </div>
             )}
-            <h5 className="fw-semibold">{contact.name}</h5>
+            <h5 className="fw-semibold">{employee.name}</h5>
 
             <p className="mt-2 mb-0 text-muted">
               Joined Date:{" "}
-              {contact.joinedDate
-                ? format(new Date(contact.joinedDate), "MMMM d, yyyy")
+              {employee.joinedDate
+                ? format(new Date(employee.joinedDate), "MMMM d, yyyy")
                 : "-"}
             </p>
 
             <div className="d-flex flex-wrap justify-content-center gap-3 mb-3 mt-3">
-              {contact.linkedinProfile && (
+              {employee.linkedinProfile && (
                 <a
-                  href={contact.linkedinProfile}
+                  href={employee.linkedinProfile}
                   target="_blank"
                   rel="noopener noreferrer"
                   title="LinkedIn Profile"
@@ -76,9 +76,9 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
                   <FaLinkedin size={24} />
                 </a>
               )}
-              {contact.githubProfile && (
+              {employee.githubProfile && (
                 <a
-                  href={contact.githubProfile}
+                  href={employee.githubProfile}
                   target="_blank"
                   rel="noopener noreferrer"
                   title="GitHub Profile"
@@ -87,9 +87,9 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
                   <FaGithub size={24} />
                 </a>
               )}
-              {contact.discordProfile && (
+              {employee.discordProfile && (
                 <a
-                  href={contact.discordProfile}
+                  href={employee.discordProfile}
                   target="_blank"
                   rel="noopener noreferrer"
                   title="Discord Profile"
@@ -101,36 +101,36 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
             </div>
             <div className="text-start mt-3 border-top pt-3">
               <p className="mb-2">
-                <strong>Post / Designation:</strong> {contact.post || "—"}
+                <strong>Post / Designation:</strong> {employee.post || "—"}
               </p>
               <p className="mb-2">
                 <strong>Email:</strong>{" "}
                 <a
-                  href={`mailto:${contact.email}`}
+                  href={`mailto:${employee.email}`}
                   className="text-decoration-none"
                 >
-                  {contact.email}
+                  {employee.email}
                 </a>
               </p>
               <p className="mb-2">
-                <strong>Phone:</strong> {contact.phone || "—"}
+                <strong>Phone:</strong> {employee.phone || "—"}
               </p>
               <p className="mb-2">
-                <strong>Address:</strong> {contact.address || "—"}
+                <strong>Address:</strong> {employee.address || "—"}
               </p>
-              {(contact.emergencyContactName || contact.emergencyContactNumber) && (
+              {(employee.emergencyContactName || employee.emergencyContactNumber) && (
                 <div className="mt-3">
                   <strong>Emergency Contact Person:</strong>
                   <p className="mb-2 mt-2">
-                    <strong>Name:</strong> {contact.emergencyContactName || "—"}
+                    <strong>Name:</strong> {employee.emergencyContactName || "—"}
                   </p>
                   <p className="mb-2">
                     <strong>Phone:</strong>{" "}
                     <a
-                      href={`tel:${contact.emergencyContactNumber}`}
+                      href={`tel:${employee.emergencyContactNumber}`}
                       className="text-decoration-none"
                     >
-                      {contact.emergencyContactNumber}
+                      {employee.emergencyContactNumber}
                     </a>
                   </p>
                 </div>
@@ -143,12 +143,12 @@ const ContactModal = ({ contact, onClose, imageError, setImageError, getStringAv
   );
 };
 
-ContactModal.propTypes = {
-  contact: PropTypes.object,
+EmployeeModal.propTypes = {
+  employee: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   imageError: PropTypes.bool.isRequired,
   setImageError: PropTypes.func.isRequired,
   getStringAvatar: PropTypes.func.isRequired,
 };
 
-export default ContactModal;
+export default EmployeeModal;
