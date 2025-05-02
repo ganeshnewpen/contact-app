@@ -94,10 +94,12 @@ const getDepartments = asyncHandler(async (req, res) => {
 
     const enrichedDepartments = await Promise.all(
       departments.map(async (dept) => {
-        const employeeCount = await Employee.countDocuments({ department: dept._id });
+        const employeeCount = await Employee.countDocuments({
+          department: dept._id,
+        });
 
         return {
-          id: dept._id,
+          id: dept.id,
           name: dept.name,
           description: dept.description,
           head: dept.head,
@@ -143,7 +145,7 @@ const deleteDepartment = asyncHandler(async (req, res) => {
       success: true,
       message: "Department deleted successfully",
       data: {
-        departmentId: deleted._id,
+        departmentId: deleted.id,
         name: deleted.name,
       },
     });

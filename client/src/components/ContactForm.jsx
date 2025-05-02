@@ -110,7 +110,7 @@ function ContactForm({ ic = {}, onSave, onCancel }) {
             >
               <option value="">Select Department</option>
               {departments.map((dept) => (
-                <option key={dept._id} value={dept._id}>
+                <option key={dept.deptId} value={dept.deptId}>
                   {dept.name}
                 </option>
               ))}

@@ -9,9 +9,12 @@ const employeeSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
+      index: true,
     },
     phone: {
       type: String,
+      unique: true,
       required: true,
     },
     address: {
